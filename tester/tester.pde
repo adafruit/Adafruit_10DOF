@@ -6,9 +6,9 @@
 #include <Adafruit_10DOF.h>
 
 /* Assign a unique ID to the sensors */
-Adafruit_LSM303_Accel accel = Adafruit_LSM303_Accel(30301);
-Adafruit_LSM303_Mag   mag   = Adafruit_LSM303_Mag(30302);
-Adafruit_BMP085       bmp   = Adafruit_BMP085(18001);
+Adafruit_LSM303_Accel_Unified accel = Adafruit_LSM303_Accel_Unified(30301);
+Adafruit_LSM303_Mag_Unified   mag   = Adafruit_LSM303_Mag_Unified(30302);
+Adafruit_BMP085_Unified       bmp   = Adafruit_BMP085_Unified(18001);
 
 /* Gyro is NOT a unified sensor driver! */
 Adafruit_L3GD20       gyro;
