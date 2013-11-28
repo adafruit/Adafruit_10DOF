@@ -22,10 +22,18 @@
 #endif
 
 #include <Adafruit_Sensor.h>
-#include <Adafruit_LSM303.h>
-#include <Adafruit_BMP085.h>
+#include <Adafruit_LSM303_U.h>
+#include <Adafruit_BMP085_U.h>
 #include <Adafruit_L3GD20.h>
 #include <Wire.h>
+
+/** Sensor axis */
+typedef enum
+{
+  SENSOR_AXIS_X  = (1),
+  SENSOR_AXIS_Y  = (2),
+  SENSOR_AXIS_Z  = (3)
+} sensors_axis_t;
 
 /* Driver for the the 10DOF breakout sensors */
 class Adafruit_10DOF
@@ -33,6 +41,11 @@ class Adafruit_10DOF
   public:
     Adafruit_10DOF(void);
     bool begin(void);
+    
+    bool  accelGetOrientation ( sensors_event_t *event, sensors_vec_t *orientation );
+    bool  magTiltCompensation ( sensors_axis_t axis, sensors_event_t *mag_event, sensors_event_t *accel_event );
+    bool  magGetOrientation   ( sensors_axis_t axis, sensors_event_t *event, sensors_vec_t *mag_orientation );
+    float pressureToAltitude  ( float seaLevel, float atmospheric, float temp );
 
   private:
 };
