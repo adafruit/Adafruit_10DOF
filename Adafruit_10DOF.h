@@ -45,7 +45,6 @@ class Adafruit_10DOF
     bool  accelGetOrientation ( sensors_event_t *event, sensors_vec_t *orientation );
     bool  magTiltCompensation ( sensors_axis_t axis, sensors_event_t *mag_event, sensors_event_t *accel_event );
     bool  magGetOrientation   ( sensors_axis_t axis, sensors_event_t *event, sensors_vec_t *mag_orientation );
-    float pressureToAltitude  ( float seaLevel, float atmospheric, float temp );
 
   private:
 };
