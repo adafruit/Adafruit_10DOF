@@ -10,11 +10,19 @@ Adafruit_LSM303_Accel_Unified accel = Adafruit_LSM303_Accel_Unified(30301);
 Adafruit_LSM303_Mag_Unified   mag   = Adafruit_LSM303_Mag_Unified(30302);
 Adafruit_BMP085_Unified       bmp   = Adafruit_BMP085_Unified(18001);
 
+/* Update this with the correct SLP for accurate altitude measurements */
+float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
+
+/**************************************************************************/
+/*!
+    @brief  Initialises all the sensors used by this example
+*/
+/**************************************************************************/
 void initSensors()
 {
   if(!accel.begin())
   {
-    /* There was a problem detecting the ADXL345 ... check your connections */
+    /* There was a problem detecting the LSM303 ... check your connections */
     Serial.println(F("Ooops, no LSM303 detected ... Check your wiring!"));
     while(1);
   }
@@ -32,6 +40,11 @@ void initSensors()
   }
 }
 
+/**************************************************************************/
+/*!
+
+*/
+/**************************************************************************/
 void setup(void)
 {
   Serial.begin(115200);
@@ -41,6 +54,11 @@ void setup(void)
   initSensors();
 }
 
+/**************************************************************************/
+/*!
+    @brief  Constantly check the roll/pitch/heading/altitude/temperature
+*/
+/**************************************************************************/
 void loop(void)
 {
   sensors_event_t accel_event;
@@ -79,7 +97,6 @@ void loop(void)
     float temperature;
     bmp.getTemperature(&temperature);
     /* Convert atmospheric pressure, SLP and temp to altitude    */
-    float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
     Serial.print(F("Alt: "));
     Serial.print(bmp.pressureToAltitude(seaLevelPressure,
                                         bmp_event.pressure,
