@@ -2,16 +2,14 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_LSM303_U.h>
 #include <Adafruit_BMP085_U.h>
-#include <Adafruit_L3GD20.h>
+#include <Adafruit_L3GD20_U.h>
 #include <Adafruit_10DOF.h>
 
 /* Assign a unique ID to the sensors */
 Adafruit_LSM303_Accel_Unified accel = Adafruit_LSM303_Accel_Unified(30301);
 Adafruit_LSM303_Mag_Unified   mag   = Adafruit_LSM303_Mag_Unified(30302);
 Adafruit_BMP085_Unified       bmp   = Adafruit_BMP085_Unified(18001);
-
-/* Gyro is NOT a unified sensor driver! */
-Adafruit_L3GD20       gyro;
+Adafruit_L3GD20_Unified       gyro  = Adafruit_L3GD20_Unified(20);
 
 void displaySensorDetails(void)
 {
@@ -25,6 +23,17 @@ void displaySensorDetails(void)
   Serial.print  (F("Max Value:    ")); Serial.print(sensor.max_value); Serial.println(F(" m/s^2"));
   Serial.print  (F("Min Value:    ")); Serial.print(sensor.min_value); Serial.println(F(" m/s^2"));
   Serial.print  (F("Resolution:   ")); Serial.print(sensor.resolution); Serial.println(F(" m/s^2"));
+  Serial.println(F("------------------------------------"));
+  Serial.println(F(""));
+
+  gyro.getSensor(&sensor);
+  Serial.println(F("------------- GYROSCOPE -----------"));
+  Serial.print  (F("Sensor:       ")); Serial.println(sensor.name);
+  Serial.print  (F("Driver Ver:   ")); Serial.println(sensor.version);
+  Serial.print  (F("Unique ID:    ")); Serial.println(sensor.sensor_id);
+  Serial.print  (F("Max Value:    ")); Serial.print(sensor.max_value); Serial.println(F(" rad/s"));
+  Serial.print  (F("Min Value:    ")); Serial.print(sensor.min_value); Serial.println(F(" rad/s"));
+  Serial.print  (F("Resolution:   ")); Serial.print(sensor.resolution); Serial.println(F(" rad/s"));
   Serial.println(F("------------------------------------"));
   Serial.println(F(""));
   
@@ -77,6 +86,12 @@ void setup(void)
     Serial.print("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!");
     while(1);
   }
+  if(!gyro.begin())
+  {
+    /* There was a problem detecting the L3GD20 ... check your connections */
+    Serial.print("Ooops, no L3GD20 detected ... Check your wiring or I2C ADDR!");
+    while(1);
+  }
   
   /* Display some basic information on this sensor */
   displaySensorDetails();
@@ -93,13 +108,20 @@ void loop(void)
   Serial.print("X: "); Serial.print(event.acceleration.x); Serial.print("  ");
   Serial.print("Y: "); Serial.print(event.acceleration.y); Serial.print("  ");
   Serial.print("Z: "); Serial.print(event.acceleration.z); Serial.print("  ");Serial.println("m/s^2 ");
- 
+
   /* Display the results (magnetic vector values are in micro-Tesla (uT)) */
   mag.getEvent(&event);
   Serial.print(F("MAG   "));
   Serial.print("X: "); Serial.print(event.magnetic.x); Serial.print("  ");
   Serial.print("Y: "); Serial.print(event.magnetic.y); Serial.print("  ");
   Serial.print("Z: "); Serial.print(event.magnetic.z); Serial.print("  ");Serial.println("uT");
+
+  /* Display the results (gyrocope values in rad/s) */
+  gyro.getEvent(&event);
+  Serial.print(F("GYRO  "));
+  Serial.print("X: "); Serial.print(event.gyro.x); Serial.print("  ");
+  Serial.print("Y: "); Serial.print(event.gyro.y); Serial.print("  ");
+  Serial.print("Z: "); Serial.print(event.gyro.z); Serial.print("  ");Serial.println("rad/s ");  
 
   /* Display the pressure sensor results (barometric pressure is measure in hPa) */
   bmp.getEvent(&event);
