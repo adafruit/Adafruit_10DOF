@@ -44,6 +44,7 @@ void draw()
   // Rotate shapes around the X/Y/Z axis (values in radians, 0..Pi*2)
   rotateX(radians(roll));
   rotateZ(radians(pitch));
+  rotateY(radians(yaw));
 
   pushMatrix();
   noStroke();

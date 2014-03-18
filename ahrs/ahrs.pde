@@ -66,13 +66,15 @@ void loop(void)
   sensors_event_t bmp_event;
   sensors_vec_t   orientation;
 
-  Serial.print(F("Orientation: "));
+  /* Read the accelerometer and magnetometer */
   accel.getEvent(&accel_event);
   mag.getEvent(&mag_event);
-  
+
+  /* Use the new fusionGetOrientation function to merge accel/mag data */  
   if (dof.fusionGetOrientation(&accel_event, &mag_event, &orientation))
   {
     /* 'orientation' should have valid .roll and .pitch fields */
+    Serial.print(F("Orientation: "));
     Serial.print(orientation.roll);
     Serial.print(F(" "));
     Serial.print(orientation.pitch);
@@ -81,45 +83,46 @@ void loop(void)
     Serial.println(F(""));
   }
 
-//  /* Calculate pitch and roll from the raw accelerometer data */
-//  Serial.print(F("Orientation: "));
-//  accel.getEvent(&accel_event);
-//  if (dof.accelGetOrientation(&accel_event, &orientation))
-//  {
-//    /* 'orientation' should have valid .roll and .pitch fields */
-//    Serial.print(orientation.roll);
-//    Serial.print(F(" "));
-//    Serial.print(orientation.pitch);
-//    Serial.print(F(" "));
-//  }
-//  
-//  /* Calculate the heading using the magnetometer */
-//  mag.getEvent(&mag_event);
-//  if (dof.magGetOrientation(SENSOR_AXIS_Z, &mag_event, &orientation))
-//  {
-//    /* 'orientation' should have valid .heading data now */
-//    Serial.print(orientation.heading);
-//  }
-//  Serial.println(F(""));
-//
-//  /* Calculate the altitude using the barometric pressure sensor */
-//  bmp.getEvent(&bmp_event);
-//  if (bmp_event.pressure)
-//  {
-//    /* Get ambient temperature in C */
-//    float temperature;
-//    bmp.getTemperature(&temperature);
-//    /* Convert atmospheric pressure, SLP and temp to altitude */
-//    Serial.print(F("Alt: "));
-//    Serial.print(bmp.pressureToAltitude(seaLevelPressure,
-//                                        bmp_event.pressure,
-//                                        temperature)); 
-//    Serial.println(F(""));
-//    /* Display the temperature */
-//    Serial.print(F("Temp: "));
-//    Serial.print(temperature);
-//    Serial.println(F(""));
-//  }
+  /* Previous code removed handling accel and mag data separately */
+  //  /* Calculate pitch and roll from the raw accelerometer data */
+  //  Serial.print(F("Orientation: "));
+  //  accel.getEvent(&accel_event);
+  //  if (dof.accelGetOrientation(&accel_event, &orientation))
+  //  {
+  //    /* 'orientation' should have valid .roll and .pitch fields */
+  //    Serial.print(orientation.roll);
+  //    Serial.print(F(" "));
+  //    Serial.print(orientation.pitch);
+  //    Serial.print(F(" "));
+  //  }
+  //  
+  //  /* Calculate the heading using the magnetometer */
+  //  mag.getEvent(&mag_event);
+  //  if (dof.magGetOrientation(SENSOR_AXIS_Z, &mag_event, &orientation))
+  //  {
+  //    /* 'orientation' should have valid .heading data now */
+  //    Serial.print(orientation.heading);
+  //  }
+  //  Serial.println(F(""));
+
+  /* Calculate the altitude using the barometric pressure sensor */
+  bmp.getEvent(&bmp_event);
+  if (bmp_event.pressure)
+  {
+    /* Get ambient temperature in C */
+    float temperature;
+    bmp.getTemperature(&temperature);
+    /* Convert atmospheric pressure, SLP and temp to altitude */
+    Serial.print(F("Alt: "));
+    Serial.print(bmp.pressureToAltitude(seaLevelPressure,
+                                        bmp_event.pressure,
+                                        temperature)); 
+    Serial.println(F(""));
+    /* Display the temperature */
+    Serial.print(F("Temp: "));
+    Serial.print(temperature);
+    Serial.println(F(""));
+  }
   
   delay(100);
 }
