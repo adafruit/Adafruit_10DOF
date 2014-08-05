@@ -34845,7 +34845,7 @@ v  -2.4608 1.5227 1.1936
 # 34835 vertices
 
 g default
-usemtl wire_177028149
+#usemtl wire_177028149
 s 1
 f 1 2 3 
 f 4 5 6 
