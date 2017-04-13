@@ -85,8 +85,8 @@ void loop() {
   /*update the pitch and the roll*/
   kalman.update(&accel_event, &gyro_event, &orientation);
 
-  Serial.print("X: "); Serial.print(orientation.pitch); Serial.print("\n");
-  Serial.print("Y: "); Serial.print(orientation.roll); Serial.print("\n\n");
+  Serial.print("Pitch: "); Serial.print(orientation.pitch); Serial.print("\n");
+  Serial.print("Roll: "); Serial.print(orientation.roll); Serial.print("\n\n");
   
   delay(500);
 }
