@@ -46,7 +46,7 @@ void setup() {
   gyro.getEvent(&gyro_event);
   delay(100);
   /*Do the calibration of the gyro*/
-  Serial.println("Startint the calibration. Don't move the sensor during the calibration."); Serial.println("");
+  Serial.println("Starting the calibration. Don't move the sensor during the calibration."); Serial.println("");
   for(i=0;i<20;i++){
       gyro.getEvent(&gyro_event);
       offset_gyro[0]+=gyro_event.gyro.x;
