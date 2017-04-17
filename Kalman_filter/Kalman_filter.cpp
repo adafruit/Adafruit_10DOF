@@ -35,7 +35,7 @@ void Kalman_filter::accelGetOrientation(sensors_event_t *accel_event){
     Accel_pitch= atan2(accel_event->acceleration.x, signOfZ * sqrt(this->Accel_pitch)) * RAD_TO_DEGREES;
     
     
-    /* roll: Rotation around the longitudinal axis (the plane body, 'X axis'). -90<=roll<=90    */
+    /* roll: Rotation around the longitudinal axis (the plane body, 'X axis'). -180<=roll<=180    */
     /* roll is positive and increasing when moving downward                                     */
     /*                                                                                          */
     /*                                 y                                                        */

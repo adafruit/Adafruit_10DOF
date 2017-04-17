@@ -6,4 +6,4 @@ This library provide a simple kalman filter for the gyroscope and the accelerome
 
 ## About Kalman filter ##
 
-The Kalmnan filter is a mathematical tool you can use to estimate the states of a dynamical systems based on a series of data.It correct the data with noises wich might be very usefool in the case of this sensor if you use it with an embedded system.
+The Kalmnan filter is a mathematical tool you can use to estimate the states of a dynamical systems based on a series of data.It correct the data without the noises wich might be very usefool in the case of this sensor if you use it with an embedded system.
