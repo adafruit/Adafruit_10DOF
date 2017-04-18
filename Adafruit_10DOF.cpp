@@ -24,8 +24,8 @@
 
 #include "Adafruit_10DOF.h"
 
-#define PI  (3.14159265F);
-#define RAD_TO_DEGREES 180.0/PI
+#define PI  (3.14159265F)
+
 
 /***************************************************************************
  PRIVATE FUNCTIONS
@@ -393,7 +393,7 @@ void Adafruit_10DOF_Kalman_Filter::accelGetOrientation(sensors_event_t *accel_ev
     /* where:  x, y, z are returned value from accelerometer sensor                             */
     
     Accel_pitch= accel_event->acceleration.y * accel_event->acceleration.y + accel_event->acceleration.z * accel_event->acceleration.z;
-    Accel_pitch= atan2(accel_event->acceleration.x, signOfZ * sqrt(this->Accel_pitch)) * RAD_TO_DEGREES;
+    Accel_pitch= atan2(accel_event->acceleration.x, signOfZ * sqrt(this->Accel_pitch)) * 180/ PI;
     
     
     /* roll: Rotation around the longitudinal axis (the plane body, 'X axis'). -180<=roll<=180    */
@@ -405,7 +405,7 @@ void Adafruit_10DOF_Kalman_Filter::accelGetOrientation(sensors_event_t *accel_ev
     /* where:  x, y, z are returned value from accelerometer sensor                             */
     
     Accel_roll= accel_event->acceleration.x * accel_event->acceleration.x + accel_event->acceleration.z * accel_event->acceleration.z;
-    Accel_roll= atan2(accel_event->acceleration.y, sqrt(this->Accel_roll)) * RAD_TO_DEGREES;
+    Accel_roll= atan2(accel_event->acceleration.y, sqrt(this->Accel_roll)) * 180/ PI;
     
 }
 
@@ -519,9 +519,9 @@ bool Adafruit_10DOF_Kalman_Filter::update(sensors_event_t *accel_event,sensors_e
     
     //update of Prediction.
     //-------------------------------
-    Predicted_pitch +=( ( (gyro_event->gyro.x-gyro_cal[0]) *RAD_TO_DEGREES) - Velocity_pitch )*dt;
+    Predicted_pitch +=( ( (gyro_event->gyro.x-gyro_cal[0]) *180/ PI) - Velocity_pitch )*dt;
     
-    Predicted_roll +=( ( (gyro_event->gyro.y-gyro_cal[1]) *RAD_TO_DEGREES) - Velocity_roll ) *dt;
+    Predicted_roll +=( ( (gyro_event->gyro.y-gyro_cal[1]) *180/ PI) - Velocity_roll ) *dt;
     
     
     this->accelGetOrientation(accel_event);
