@@ -84,12 +84,12 @@ private:
     
     //noise in the covariance matrix
     //---------------------
-    float Q_angle = 0.1;
-    float Q_velocity = 0.1;
+    float Q_angle = 0.01;
+    float Q_velocity = 0.01;
     
     //measurement noise
     //---------------------
-    float R = 5;
+    float R = 0.03;
     
     //Covariance Matrix
     //--------------------
