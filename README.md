@@ -1,4 +1,4 @@
-#Adafruit 10DOF Library
+# Adafruit 10DOF Library
 
 This driver is for the Adafruit 10DOF Breakout (http://www.adafruit.com/products/1604), and makes use of Adafruit's Unified Sensor Library (https://github.com/adafruit/Adafruit_Sensor) to provide standard SI units of measure and easy to reuse sensor data.
 
